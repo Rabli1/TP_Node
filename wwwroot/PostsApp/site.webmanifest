@@ -1,0 +1,15 @@
+{
+    "name": "Fil de nouvelles",
+    "short_name": "Nouvelles",
+    "icons": [
+        {
+            "src": "bookmark_logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}
