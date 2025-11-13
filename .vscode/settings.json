@@ -1,0 +1,8 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/afe79482-1b55-453a-9681-e1f7eb1a5a3e/resourceGroups/tpNode/providers/Microsoft.Web/sites/tpNode",
+    "appService.deploySubpath": ".",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ]
+}
