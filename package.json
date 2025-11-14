@@ -5,7 +5,7 @@
   "main": "http-server.js",
   "type": "module",
   "engines": {
-    "node": ">20"
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "date-and-time": "^2.4.1",

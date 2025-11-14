@@ -17,10 +17,15 @@ function isDirectory(url) {
     return extension == '';
 }
 
+function normalizeResourceName(resourceName) {
+    return resourceName.replace(/^[/\\]+/, '');
+}
+
 function requestedStaticResource(url) {
     let isDir = isDirectory(url);
     url += isDir ? (url.slice(-1) != '/' ? '/' : '') : '';
     let resourceName = isDir ? url + defaultResource : url;
+    resourceName = normalizeResourceName(resourceName);
     let resourcePath = path.join(process.cwd(), wwwroot, resourceName);
     return resourcePath;
 }

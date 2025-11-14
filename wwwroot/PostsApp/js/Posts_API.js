@@ -1,5 +1,5 @@
 class Posts_API {
-    static API_URL() { return `/api/Posts`; }
+    static API_URL() { return `https://tpnode.azurewebsites.net/api/Posts`; }
 
     static currentETag = "";
     static holdPeriodicRefresh = false;
