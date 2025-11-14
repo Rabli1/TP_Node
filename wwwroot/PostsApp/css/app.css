@@ -36,6 +36,7 @@ body {
     flex-direction: column;
     gap: 14px;
     min-height: 100vh;
+    height: 100vh;
 }
 
 #header {
@@ -72,11 +73,15 @@ body {
     border-radius: 16px;
     width: 100%;
     flex: 1;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
 }
 
 #scrollPanel {
-    height: 100%;
+    flex: 1;
+    min-height: 0;
     overflow-x: hidden;
     overflow-y: auto;
     scrollbar-gutter: stable;
@@ -85,6 +90,10 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+#scrollPanel.noSnap {
+    scroll-snap-type: none;
 }
 
 #filterPanel {
@@ -141,7 +150,8 @@ body {
 }
 
 #forms {
-    height: 100%;
+    flex: 1;
+    min-height: 0;
     overflow-x: hidden;
     overflow-y: auto;
     scrollbar-gutter: stable;

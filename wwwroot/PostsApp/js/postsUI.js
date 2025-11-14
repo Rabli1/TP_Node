@@ -24,6 +24,8 @@ async function Init_UI() {
             applyKeywordFilter();
         }
     });
+    $('#searchKeys').on('focusin', () => { $('#scrollPanel').addClass('noSnap'); });
+    $('#searchKeys').on('focusout', () => { $('#scrollPanel').removeClass('noSnap'); });
 
     applySearchPanelVisibility();
     showPosts();

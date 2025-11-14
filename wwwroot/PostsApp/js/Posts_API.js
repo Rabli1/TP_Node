@@ -3,7 +3,7 @@ class Posts_API {
 
     static currentETag = "";
     static holdPeriodicRefresh = false;
-    static periodicRefreshPeriod = 8; // seconds
+    static periodicRefreshPeriod = 3; // seconds
 
     static initHttpState() {
         this.currentHttpError = "";
@@ -31,9 +31,12 @@ class Posts_API {
         setInterval(async () => {
             if (!this.holdPeriodicRefresh) {
                 const etag = await this.HEAD();
-                if (etag && this.currentETag && etag !== this.currentETag) {
-                    this.currentETag = etag;
-                    await callback();
+                if (etag) {
+                    if (this.currentETag && etag !== this.currentETag) {
+                        await callback();
+                    } else if (!this.currentETag) {
+                        this.currentETag = etag;
+                    }
                 }
             }
         }, this.periodicRefreshPeriod * 1000);
@@ -54,10 +57,7 @@ class Posts_API {
                 url: this.API_URL(),
                 type: "HEAD",
                 contentType: "text/plain",
-                complete: data => {
-                    this.currentETag = data.getResponseHeader("ETag");
-                    resolve(this.currentETag);
-                },
+                success: (_, __, xhr) => { resolve(xhr.getResponseHeader("ETag")); },
                 error: xhr => { this.setHttpErrorState(xhr); resolve(null); }
             });
         });

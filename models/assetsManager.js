@@ -24,7 +24,13 @@ export function save(base64Data) {
 export function remove(assetToDelete) {
     if (assetToDelete != '') {
         let assetPath = `./${wwwroot}/${assetsRepository}/${assetToDelete}`;
-        fs.unlinkSync(assetPath);
+        try {
+            if (fs.existsSync(assetPath)) {
+                fs.unlinkSync(assetPath);
+            }
+        } catch (error) {
+            console.warn(`[AssetsRepository] Unable to delete asset ${assetToDelete}: ${error.message}`);
+        }
     }
 }
 export function addHostReference(asset) {

@@ -21,12 +21,34 @@ function normalizeResourceName(resourceName) {
     return resourceName.replace(/^[/\\]+/, '');
 }
 
+function resolveCaseInsensitivePath(resourceName) {
+    const segments = resourceName.split(/[/\\]+/).filter(segment => segment.length > 0);
+    let currentPath = path.join(process.cwd(), wwwroot);
+    for (let i = 0; i < segments.length; i++) {
+        const segment = segments[i];
+        let candidatePath = path.join(currentPath, segment);
+        if (!fs.existsSync(candidatePath)) {
+            try {
+                const entries = fs.readdirSync(currentPath);
+                const match = entries.find(entry => entry.toLowerCase() === segment.toLowerCase());
+                if (match) {
+                    candidatePath = path.join(currentPath, match);
+                }
+            } catch {
+                return path.join(currentPath, ...segments.slice(i));
+            }
+        }
+        currentPath = candidatePath;
+    }
+    return currentPath;
+}
+
 function requestedStaticResource(url) {
     let isDir = isDirectory(url);
     url += isDir ? (url.slice(-1) != '/' ? '/' : '') : '';
     let resourceName = isDir ? url + defaultResource : url;
     resourceName = normalizeResourceName(resourceName);
-    let resourcePath = path.join(process.cwd(), wwwroot, resourceName);
+    let resourcePath = resolveCaseInsensitivePath(resourceName);
     return resourcePath;
 }
 
